@@ -1,129 +1,111 @@
- Bài 1
+Dưới đây là phần giải thích lại **README.md** cho phù hợp với code mới (có hiển thị ảnh bằng matplotlib trong Jupyter Notebook):
 
-import numpy as np
-import os
-import cv2
-Nhập thư viện cần thiết: numpy (xử lý mảng), os (quản lý tệp), cv2 (OpenCV).
+---
 
+## Bài 1  
+- **Nhập thư viện:**  
+  `import numpy as np`, `import os`, `import cv2`, `import matplotlib.pyplot as plt`  
+- **Tạo thư mục lưu ảnh:**  
+  `os.makedirs('output_images', exist_ok=True)`  
+- **Đọc ảnh:**  
+  `img = cv2.imread('bird.png')`  
+- **Tách kênh màu:**  
+  `b, g, r = cv2.split(img)`  
+- **Tạo ảnh chỉ giữ 1 kênh màu:**  
+  - Đặt 2 kênh còn lại bằng 0, ghép lại bằng `cv2.merge`
+- **Lưu ảnh:**  
+  `cv2.imwrite(...)`
+- **Hiển thị ảnh:**  
+  Dùng `plt.imshow(...)` để hiển thị ảnh gốc và từng kênh màu ngay trên notebook.
 
-os.makedirs('output_images', exist_ok=True)
-Tạo thư mục lưu ảnh đầu ra. Nếu đã tồn tại thì không báo lỗi.
+---
 
-img = cv2.imread('bird.png')
-Đọc ảnh gốc từ file.
+## Bài 2  
+- **Hoán đổi các kênh màu:**  
+  - Đọc ảnh, dùng indexing để đổi chỗ các kênh màu (R-G, G-B, B-R)
+- **Lưu ảnh:**  
+  `cv2.imwrite(...)`
+- **Hiển thị ảnh:**  
+  Dùng `plt.imshow(...)` để xem trực tiếp ảnh đã đổi kênh màu.
 
+---
 
-b, g, r = cv2.split(img)
-Tách ảnh thành 3 kênh màu: Blue, Green, Red (BGR – mặc định của OpenCV).
+## Bài 3  
+- **Chuyển đổi sang HSV:**  
+  `hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)`
+- **Tách kênh HSV:**  
+  `h, s, v = cv2.split(hsv_img)`
+- **Tạo ảnh chỉ giữ 1 kênh:**  
+  - Đặt các kênh còn lại ở mức tối đa để dễ quan sát.
+- **Lưu ảnh:**  
+  `cv2.imwrite(...)`
+- **Hiển thị ảnh:**  
+  Dùng `plt.imshow(...)` để xem từng kênh HSV.
 
+---
 
-zero = np.zeros_like(b)
-Tạo một ma trận zero cùng kích thước với kênh ảnh, dùng để "vô hiệu hóa" các kênh không mong muốn.
+## Bài 4  
+- **Chỉnh sửa kênh Hue và Value:**  
+  - Chia nhỏ giá trị Hue, giảm Value để thay đổi màu và độ sáng.
+- **Gộp lại và chuyển về BGR:**  
+  `result_img = cv2.cvtColor(hsv_modified, cv2.COLOR_HSV2BGR)`
+- **Lưu ảnh:**  
+  `cv2.imwrite(...)`
+- **Hiển thị ảnh:**  
+  Dùng `plt.imshow(...)` để so sánh ảnh gốc và ảnh đã chỉnh HSV.
 
+---
 
-red_img = cv2.merge([zero, zero, r])
-green_img = cv2.merge([zero, g, zero])
-blue_img = cv2.merge([b, zero, zero])
-Tạo ảnh chỉ giữ 1 kênh màu, 2 kênh còn lại là 0 (đen).
+## Bài 5  
+- **Lọc trung bình (Mean filter):**  
+  `mean_filtered = cv2.blur(img, (5, 5))`
+- **Lưu ảnh:**  
+  `cv2.imwrite(...)`
+- **Hiển thị ảnh:**  
+  Dùng `plt.imshow(...)` để xem ảnh gốc và ảnh đã lọc.
 
+---
 
-cv2.imwrite('output_images/red_image.png', red_img)
+## Bài 6  
+- **Lọc nhiễu bằng 3 kỹ thuật:**  
+  - `cv2.blur(...)` (Mean filter)  
+  - `cv2.GaussianBlur(...)` (Gaussian filter)  
+  - `cv2.medianBlur(...)` (Median filter)
+- **Lưu ảnh:**  
+  `cv2.imwrite(...)`
+- **Hiển thị ảnh:**  
+  Dùng `plt.imshow(...)` để so sánh trực tiếp 4 ảnh: gốc, mean, gaussian, median.
 
-Ghi ảnh đã xử lý ra tệp.
+---
 
- Bài 2: 
+## Bài 7  
+- **Tìm biên bằng 3 phương pháp:**  
+  - Chuyển ảnh về xám: `cv2.cvtColor(denoised, cv2.COLOR_BGR2GRAY)`
+  - Canny: `cv2.Canny(...)`
+  - Sobel: `cv2.Sobel(...)`
+  - Laplacian: `cv2.Laplacian(...)`
+- **Lưu ảnh:**  
+  `cv2.imwrite(...)`
+- **Hiển thị ảnh:**  
+  Dùng `plt.imshow(...)` để xem ảnh gốc và các kết quả tìm biên.
 
-img = cv2.imread('bird.png')
-Đọc ảnh gốc.
+---
 
+## Bài 8  
+- **Xáo trộn kênh màu RGB:**  
+  - Tách kênh, xáo trộn thứ tự, ghép lại bằng `cv2.merge`
+- **Lưu ảnh:**  
+  `cv2.imwrite(...)`
+- **Hiển thị ảnh:**  
+  Dùng `plt.imshow(...)` để xem ảnh gốc và ảnh đã xáo trộn màu.
 
-rg_img = img.copy()
-rg_img[:, :, [1, 2]] = rg_img[:, :, [2, 1]]
-Hoán đổi kênh G và R. Sử dụng indexing để thay đổi trật tự kênh.
+---
 
-
-gb_img[:, :, [0, 1]] = gb_img[:, :, [1, 0]]
-br_img[:, :, [0, 2]] = br_img[:, :, [2, 0]]
-Hoán đổi G–B và B–R theo cách tương tự.
-
-
-cv2.imwrite(...), print(...)
-Lưu ảnh và in thông báo.
-
-Bài 3: 
-
-hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-Chuyển ảnh từ hệ màu BGR sang HSV.
-
-
-h, s, v = cv2.split(hsv_img)
-Tách 3 kênh Hue, Saturation, Value.
-
-
-cv2.merge([h, 255 * ones, 255 * ones])
-Tạo ảnh hiển thị riêng kênh Hue với S và V đặt ở mức tối đa để dễ nhìn.
-
-
-cv2.cvtColor(..., cv2.COLOR_HSV2BGR)
-Chuyển ảnh HSV sang lại BGR để hiển thị và lưu.
-
-Bài 4:
-h_new = np.clip((h / 3), 0, 179).astype(np.uint8)
-Chia kênh Hue cho 3 để thay đổi màu. Dùng clip để giới hạn giá trị trong khoảng hợp lệ (0–179).
-
-
-v_new = np.clip((v * 0.75), 0, 255).astype(np.uint8)
-Giảm độ sáng (Value) xuống 75%.
-
-
-hsv_modified = cv2.merge([h_new, s, v_new])
-result_img = cv2.cvtColor(hsv_modified, cv2.COLOR_HSV2BGR)
-Gộp lại và chuyển về BGR để lưu ảnh.
-
-Bài 5: 
-
-cv2.blur(img, (5, 5))
-Áp dụng mean filter (lọc trung bình) để làm mịn ảnh. (5, 5) là kích thước kernel (khung lọc).
-
-
-for filename in os.listdir(input_folder):
-Lặp qua toàn bộ ảnh trong thư mục.
-
-Bài 6:
-cv2.blur(...) → mean filter  
-cv2.GaussianBlur(...) → gaussian filter  
-cv2.medianBlur(...) → median filter
-Lọc ảnh bằng 3 kỹ thuật khác nhau để so sánh hiệu quả làm mịn hoặc giảm nhiễu.
-
-Bài 7:
-
-gray = cv2.cvtColor(denoised, cv2.COLOR_BGR2GRAY)
-Chuyển ảnh về xám để xác định biên.
-
-
-cv2.Canny(gray, 100, 200) → Canny edge detector  
-cv2.Sobel(gray, ...) → Tính đạo hàm Sobel theo x  
-cv2.Laplacian(gray, ...) → Toán tử Laplacian
-3 phương pháp tìm biên phổ biến trong xử lý ảnh.
-
-Bài 8: 
-
-channels = list(cv2.split(denoised))
-np.random.shuffle(channels)
-Tách các kênh màu rồi xáo trộn ngẫu nhiên thứ tự.
-
-
-randomized_rgb = cv2.merge(channels)
-Ghép lại để tạo ảnh có màu sắc bất thường/khác lạ.
-
-Bài 9: 
-
-hsv_img = cv2.cvtColor(denoised, cv2.COLOR_BGR2HSV)
-h, s, v = cv2.split(hsv_img)
-np.random.shuffle([h, s, v])
-Tương tự như bài 8 nhưng thực hiện trên không gian màu HSV → tạo hiệu ứng màu mạnh mẽ hơn.
-
-
-cv2.cvtColor(shuffled_hsv, cv2.COLOR_HSV2BGR)
-Chuyển về BGR để hiển thị ảnh kết quả.
+## Bài 9  
+- **Xáo trộn kênh HSV:**  
+  - Chuyển sang HSV, tách kênh, xáo trộn, ghép lại, chuyển về BGR.
+- **Lưu ảnh:**  
+  `cv2.imwrite(...)`
+- **Hiển thị ảnh:**  
+  Dùng `plt.imshow(...)` để xem ảnh gốc và ảnh đã xáo trộn HSV.
 
