@@ -4,7 +4,9 @@ cv2: xử lý ảnh.
 numpy: xử lý mảng.
 os: quản lý thư mục.
 2.Tạo thư mục nếu chưa có:
-![image](https://github.com/user-attachments/assets/b68e1658-af8f-4ca0-aa76-372ad2b5f357)
+
+![image](https://github.com/user-attachments/assets/a651fbc1-dc53-4475-b5f1-122ea76e6269)
+
 3.Đọc ảnh gốc (bird.png):
 ![image](https://github.com/user-attachments/assets/3884575a-e603-45c8-8fd4-092abf122e87)
 4.Tách ảnh thành 3 kênh màu B, G, R:
@@ -36,4 +38,11 @@ os: quản lý thư mục.
 7.Thông báo hoàn tất:
 
 ![image](https://github.com/user-attachments/assets/2f826f3c-4dc3-4f67-81b1-08f57b93fa01)
+ Kết quả:
+Bạn sẽ có 3 ảnh được lưu trong thư mục output_images:
 
+red_image.png
+
+green_image.png
+
+blue_image.png
